@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    #show-sql: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.1.1.174:3306/my_spider?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: 123456
+#log配置
+logging:
+  file: jerryWebSpider.log
+  root: info
+  level.com.hytchare.jerrywebspider: DEBUG
+  level.org.springframework.web: INFO
+  level.org.hibernate: ERROR
+
+#Tuwan地址
+tuwan:
+  welfareUrl: https://api.tuwan.com/apps/Welfare/detail
+  tuwanImageStorePath: /home/jerrySpider/tuwan
+  #tuwanImageStorePath: D:\data\tuWan
+  tuwanSpiderTaskName: tuwanSpiderTask
+  tuwanDownloadTaskName: tuwanDownloadTask
+#服务端口
+server:
+  port: 8088
