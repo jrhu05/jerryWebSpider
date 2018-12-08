@@ -6,7 +6,7 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 
 ## 项目模块 
 
-### 1、tuwanSpider
+### 一、tuwanSpider
 
 提供对tuwan网妹子图、音乐的抓取及下载功能，程序主要逻辑集中在task包下的TuwanSpiderTask类与TuwanImageDownloadTask类，入口为TuwanSpiderController。
 
@@ -18,7 +18,7 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 
 ## 运行说明
 
-### 1、tuwanSpider运行说明
+### 一、tuwanSpider运行说明
 
 将代码clone到本地后。
 
@@ -40,7 +40,8 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 
 ## 其他
 
-以上案例、代码及说明仅供测试使用，请勿用于商业用途。如需转载请注明出处，如代码运行或测试过程中发现问题或bug请发起issue。
+以上案例、代码及说明仅供测试使用，请勿用于商业用途。如需转载请注明出处，如代码运行或测试过程中发现问题或bug请发起issues。
 
 资源打包下载见
 
+http://blog.hytcshare.com/post/tuwan-spider.html
