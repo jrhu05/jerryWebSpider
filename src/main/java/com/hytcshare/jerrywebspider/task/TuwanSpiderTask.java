@@ -11,13 +11,13 @@ import com.hytcshare.jerrywebspider.exception.SpiderException;
 import com.hytcshare.jerrywebspider.service.SpiderTaskService;
 import com.hytcshare.jerrywebspider.service.TuwanImagesService;
 import com.hytcshare.jerrywebspider.service.TuwanMp3Service;
-import com.hytcshare.jerrywebspider.util.HttpUtils;
+import com.hytcshare.jerrywebspider.utils.HttpUtils;
+import com.hytcshare.jerrywebspider.utils.TaskUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
 import java.util.*;
 
-@Component
 @Slf4j
 public class TuwanSpiderTask implements Runnable {
     private String welfareUrl;
@@ -63,20 +63,7 @@ public class TuwanSpiderTask implements Runnable {
     @Override
     public void run() {
         log.info("tuwan spider start！");
-        SpiderTask tuwanSpiderTask = spiderTaskService.getTaskByName(tuwanSpiderTaskName);
-        if (tuwanSpiderTask == null || StringUtils.isEmpty(tuwanSpiderTask.getTaskName())) {
-            //建立新任务
-            tuwanSpiderTask = new SpiderTask();
-            tuwanSpiderTask.setTaskName(tuwanSpiderTaskName);
-            tuwanSpiderTask.setStatus(SpiderTaskStatusEnum.ONGOING.getCode());
-            spiderTaskService.saveOrUpdate(tuwanSpiderTask);
-        } else if (tuwanSpiderTask.getStatus() == SpiderTaskStatusEnum.ONGOING.getCode()) {
-            //已经有在执行的任务
-            return;
-        }
-        //置为正在执行
-        tuwanSpiderTask.setStatus(SpiderTaskStatusEnum.ONGOING.getCode());
-        spiderTaskService.saveOrUpdate(tuwanSpiderTask);
+        TaskUtils.startTask(spiderTaskService, tuwanSpiderTaskName);
         //获取图片压缩包和MP3地址
         List<TuwanImages> tuwanImagesList = new ArrayList<>();
         List<TuwanMp3> tuwanMp3List = new ArrayList<>();
@@ -93,8 +80,7 @@ public class TuwanSpiderTask implements Runnable {
             getImagesAndMp3(tuwanImagesList, tuwanMp3List, i);
         }
         //更新任务状态为执行完毕
-        tuwanSpiderTask.setStatus(SpiderTaskStatusEnum.SHUTDOWN.getCode());
-        spiderTaskService.saveOrUpdate(tuwanSpiderTask);
+        TaskUtils.shutdownTask(spiderTaskService, tuwanSpiderTaskName);
         log.info("tuwan spider task finish!");
     }
 
@@ -122,12 +108,12 @@ public class TuwanSpiderTask implements Runnable {
                 //后续解析
                 String title = (String) jsonObject.get("title");
                 String url = (String) jsonObject.get("url");
-                Integer total= (Integer) jsonObject.get("total");
+                Integer total = (Integer) jsonObject.get("total");
                 //log.info("total:"+total);
-                JSONArray covers= (JSONArray)jsonObject.get("data");
+                JSONArray covers = (JSONArray) jsonObject.get("data");
                 //log.info("covers:"+covers);
-                String cover="";
-                if (covers.size()>0){
+                String cover = "";
+                if (covers.size() > 0) {
                     JSONObject coverObj = (JSONObject) covers.get(0);
                     cover = (String) coverObj.get("pic");
                 }
@@ -164,7 +150,7 @@ public class TuwanSpiderTask implements Runnable {
                 }
             }
 
-        }else {
+        } else {
             log.info("wrongPage!-->" + index);
         }
     }

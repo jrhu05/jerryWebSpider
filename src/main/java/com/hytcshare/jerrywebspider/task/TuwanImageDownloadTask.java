@@ -8,8 +8,9 @@ import com.hytcshare.jerrywebspider.enums.SpiderTaskStatusEnum;
 import com.hytcshare.jerrywebspider.service.ErrorLogService;
 import com.hytcshare.jerrywebspider.service.SpiderTaskService;
 import com.hytcshare.jerrywebspider.service.TuwanImagesService;
-import com.hytcshare.jerrywebspider.util.DownloadUtils;
-import com.hytcshare.jerrywebspider.util.ExceptionUtil;
+import com.hytcshare.jerrywebspider.utils.DownloadUtils;
+import com.hytcshare.jerrywebspider.utils.ExceptionUtils;
+import com.hytcshare.jerrywebspider.utils.TaskUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -49,20 +50,7 @@ public class TuwanImageDownloadTask implements Runnable {
     @Override
     public void run() {
         log.info("start download tuwan image zip package!");
-        SpiderTask tuwanSpiderTask = spiderTaskService.getTaskByName(tuwanDownloadTaskName);
-        if (tuwanSpiderTask == null || StringUtils.isEmpty(tuwanSpiderTask.getTaskName())) {
-            //建立新任务
-            tuwanSpiderTask = new SpiderTask();
-            tuwanSpiderTask.setTaskName(tuwanDownloadTaskName);
-            tuwanSpiderTask.setStatus(SpiderTaskStatusEnum.ONGOING.getCode());
-            spiderTaskService.saveOrUpdate(tuwanSpiderTask);
-        } else if (tuwanSpiderTask.getStatus() == SpiderTaskStatusEnum.ONGOING.getCode()) {
-            //已经有在执行的任务
-            return;
-        }
-        //置为正在执行
-        tuwanSpiderTask.setStatus(SpiderTaskStatusEnum.ONGOING.getCode());
-        spiderTaskService.saveOrUpdate(tuwanSpiderTask);
+        TaskUtils.startTask(spiderTaskService, tuwanDownloadTaskName);
         //获取待下载列表
         List<TuwanImages> notDownloadedList = tuwanImagesService.getNotDownloadedList();
         //对无效链接进行过滤
@@ -83,14 +71,13 @@ public class TuwanImageDownloadTask implements Runnable {
                 errorLog.setCreator(this.getClass().getName());
                 errorLog.setErrorMessage("图片文件下载失败！index: " + image.getId());
                 errorLog.setLogTime(new Date());
-                errorLog.setStackDump(ExceptionUtil.getStackTrace(e));
+                errorLog.setStackDump(ExceptionUtils.getStackTrace(e));
                 errorLogService.insertOrUpdate(errorLog);
             }
         }
         log.info("download tuwan image zip package finish!");
         //更新任务状态为执行完毕
-        tuwanSpiderTask.setStatus(SpiderTaskStatusEnum.SHUTDOWN.getCode());
-        spiderTaskService.saveOrUpdate(tuwanSpiderTask);
+        TaskUtils.shutdownTask(spiderTaskService, tuwanDownloadTaskName);
     }
 
     private List<TuwanImages> wipeOutUselessImage(List<TuwanImages> notDownloadedList) {

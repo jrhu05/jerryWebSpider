@@ -15,14 +15,25 @@ logging:
   level.com.hytchare.jerrywebspider: DEBUG
   level.org.springframework.web: INFO
   level.org.hibernate: ERROR
-
 #Tuwan地址
 tuwan:
+  #tuwan爬虫入口
   welfareUrl: https://api.tuwan.com/apps/Welfare/detail
-  tuwanImageStorePath: /home/jerrySpider/tuwan
-  #tuwanImageStorePath: D:\data\tuWan
-  tuwanSpiderTaskName: tuwanSpiderTask
-  tuwanDownloadTaskName: tuwanDownloadTask
+  #图包存储路径
+  #imageStorePath: /home/jerrySpider/tuwan
+  imageStorePath: D:\data\tuWan
+  spiderTaskName: tuwanSpiderTask
+  downloadTaskName: tuwanDownloadTask
+#Leshe地址
+leshe:
+  #leshe爬虫入口
+  welfareUrl: http://111.231.221.217:34567/A:/
+  #leshe待爬取相册大类，以英文逗号分隔，其中森萝财团为空
+  collectionName: 喵写真,少女秩序,风之领域,轻兰映画
+  imageStorePath: /home/jerrySpider/leshe
+  #imageStorePath: D:\data\leshe
+  spiderTaskName: lesheSpiderTask
+  downloadTaskName: lesheDownloadTask
 #服务端口
 server:
   port: 8088

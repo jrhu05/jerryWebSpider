@@ -1,4 +1,4 @@
-package com.hytcshare.jerrywebspider.util;
+package com.hytcshare.jerrywebspider.utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
