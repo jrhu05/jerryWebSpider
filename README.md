@@ -16,7 +16,7 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 
 提供对leshe网妹子图的抓取及下载功能，程序主要逻辑集中在task包下的LesheSpiderTask类与LesheImageDownloadTask类，入口为LesheSpiderController。
 
-图片占位
+![](https://raw.githubusercontent.com/jrhu05/jerryWebSpider/master/pic/leshe.jpg)
 
 ## 目录结构
 
