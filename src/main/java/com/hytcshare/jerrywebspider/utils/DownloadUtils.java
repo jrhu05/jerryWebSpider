@@ -95,7 +95,7 @@ public class DownloadUtils {
         if (url.trim().endsWith("/")) {
             throw new SpiderException(ExceptionEnum.URL_ILLEGAL.getCode(), ExceptionEnum.URL_ILLEGAL.getDes());
         }
-        return url.substring(url.lastIndexOf("/") + 1);
+        return url.substring(url.lastIndexOf("/") + 1,url.lastIndexOf("."));
     }
 
     private static String getFileExtensionFromUrl(String url) {
@@ -109,7 +109,8 @@ public class DownloadUtils {
         //System.out.println(getFileNameFromUrl("http://picshare.static.tuwan.com/picshare/20170623175818_9980.zip"));
         //downloadFile("D:\\data\\tuWan\\image", "猫ソロ", "http://picshare.static.tuwan.com/picshare/20170705193227_711.zip");
         //System.out.println(getFileExtensionFromUrl("http://111.231.221.217:34567/A:/%E5%96%B5%E5%86%99%E7%9C%9F/%E5%96%B5%E5%86%99%E7%9C%9F%20PR15%20001.zip"));
-        downloadFile("D:\\data\\leshe", "", "喵写真PR15001", "http://111.231.221.217:34567/A:/%E5%96%B5%E5%86%99%E7%9C%9F/%E5%96%B5%E5%86%99%E7%9C%9F%20PR15%20001.zip");
+        //downloadFile("D:\\data\\leshe", "", "喵写真PR15001", "http://111.231.221.217:34567/A:/%E5%96%B5%E5%86%99%E7%9C%9F/%E5%96%B5%E5%86%99%E7%9C%9F%20PR15%20001.zip");
+        System.out.println(getFileNameFromUrl("https://www.leshe.us/wp-content/uploads/2018/12/ALPHA-020-13.jpg"));
     }
 
     /**

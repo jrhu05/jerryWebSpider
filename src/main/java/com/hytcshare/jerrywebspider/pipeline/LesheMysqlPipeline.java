@@ -3,13 +3,10 @@ package com.hytcshare.jerrywebspider.pipeline;
 import com.hytcshare.jerrywebspider.entity.LesheImages;
 import com.hytcshare.jerrywebspider.enums.DownloadedStatusEnum;
 import com.hytcshare.jerrywebspider.service.LesheImagesService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;

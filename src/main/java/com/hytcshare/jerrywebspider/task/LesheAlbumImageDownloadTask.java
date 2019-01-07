@@ -1,10 +1,10 @@
 package com.hytcshare.jerrywebspider.task;
 
 import com.hytcshare.jerrywebspider.entity.ErrorLog;
-import com.hytcshare.jerrywebspider.entity.LesheImages;
+import com.hytcshare.jerrywebspider.entity.LesheAlbumImages;
 import com.hytcshare.jerrywebspider.enums.DownloadedStatusEnum;
 import com.hytcshare.jerrywebspider.service.ErrorLogService;
-import com.hytcshare.jerrywebspider.service.LesheImagesService;
+import com.hytcshare.jerrywebspider.service.LesheAlbumImagesService;
 import com.hytcshare.jerrywebspider.service.SpiderTaskService;
 import com.hytcshare.jerrywebspider.utils.DownloadUtils;
 import com.hytcshare.jerrywebspider.utils.ExceptionUtils;
@@ -14,17 +14,13 @@ import java.util.Date;
 import java.util.List;
 
 @Slf4j
-public class LesheImageDownloadTask implements Runnable {
-    private LesheImagesService lesheImagesService;
+public class LesheAlbumImageDownloadTask implements Runnable {
+    private LesheAlbumImagesService lesheAlbumImagesService;
     private ErrorLogService errorLogService;
     private SpiderTaskService spiderTaskService;
 
-    private String lesheImageStorePath;
-    private String lesheDownloadTaskName;
-
-    public void setLesheImagesService(LesheImagesService lesheImagesService) {
-        this.lesheImagesService = lesheImagesService;
-    }
+    private String lesheAlbumImageStorePath;
+    private String lesheAlbumDownloadTaskName;
 
     public void setErrorLogService(ErrorLogService errorLogService) {
         this.errorLogService = errorLogService;
@@ -34,28 +30,32 @@ public class LesheImageDownloadTask implements Runnable {
         this.spiderTaskService = spiderTaskService;
     }
 
-    public void setLesheImageStorePath(String lesheImageStorePath) {
-        this.lesheImageStorePath = lesheImageStorePath;
+    public void setLesheAlbumImagesService(LesheAlbumImagesService lesheAlbumImagesService) {
+        this.lesheAlbumImagesService = lesheAlbumImagesService;
     }
 
-    public void setLesheDownloadTaskName(String lesheDownloadTaskName) {
-        this.lesheDownloadTaskName = lesheDownloadTaskName;
+    public void setLesheAlbumImageStorePath(String lesheAlbumImageStorePath) {
+        this.lesheAlbumImageStorePath = lesheAlbumImageStorePath;
+    }
+
+    public void setLesheAlbumDownloadTaskName(String lesheAlbumDownloadTaskName) {
+        this.lesheAlbumDownloadTaskName = lesheAlbumDownloadTaskName;
     }
 
     @Override
     public void run() {
-        log.info("start download leshe image zip package!");
-        TaskUtils.startTask(spiderTaskService, lesheDownloadTaskName);
+        log.info("start download leshe album images!");
+        TaskUtils.startTask(spiderTaskService, lesheAlbumDownloadTaskName);
         //获取待下载列表
-        List<LesheImages> notDownloadedList = lesheImagesService.getNotDownloadedList();
+        List<LesheAlbumImages> notDownloadedList = lesheAlbumImagesService.getNotDownloadedList();
         //遍历下载
-        for (LesheImages image : notDownloadedList) {
+        for (LesheAlbumImages image : notDownloadedList) {
             try {
-                //下载图包
-                DownloadUtils.downloadFile(lesheImageStorePath, "", image.getTitle(), image.getUrl());
+                //下载图片
+                DownloadUtils.downloadFile(lesheAlbumImageStorePath, "", image.getUrl());
                 //更新已下载记录
                 image.setDownloaded(DownloadedStatusEnum.DOWNLOADED.getCode());
-                lesheImagesService.insertOrUpdate(image);
+                lesheAlbumImagesService.insertOrUpdate(image);
             } catch (Exception e) {
                 //记录错误日志
                 ErrorLog errorLog = new ErrorLog();
@@ -66,9 +66,9 @@ public class LesheImageDownloadTask implements Runnable {
                 errorLogService.insertOrUpdate(errorLog);
             }
         }
-        log.info("download leshe image zip package finish!");
+        log.info("download leshe album images finish!");
         //更新任务状态为执行完毕
-        TaskUtils.shutdownTask(spiderTaskService, lesheDownloadTaskName);
+        TaskUtils.shutdownTask(spiderTaskService, lesheAlbumDownloadTaskName);
 
     }
 }

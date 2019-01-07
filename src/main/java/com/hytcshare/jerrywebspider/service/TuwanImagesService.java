@@ -5,7 +5,6 @@ import com.hytcshare.jerrywebspider.entity.TuwanImages;
 import com.hytcshare.jerrywebspider.enums.DownloadedStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

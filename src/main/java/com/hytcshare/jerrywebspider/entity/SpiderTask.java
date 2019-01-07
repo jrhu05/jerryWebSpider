@@ -2,7 +2,6 @@ package com.hytcshare.jerrywebspider.entity;
 
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 
 /**

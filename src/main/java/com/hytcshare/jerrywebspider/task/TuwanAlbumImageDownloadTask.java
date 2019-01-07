@@ -1,11 +1,11 @@
 package com.hytcshare.jerrywebspider.task;
 
 import com.hytcshare.jerrywebspider.entity.ErrorLog;
-import com.hytcshare.jerrywebspider.entity.LesheImages;
+import com.hytcshare.jerrywebspider.entity.TuwanAlbumImages;
 import com.hytcshare.jerrywebspider.enums.DownloadedStatusEnum;
 import com.hytcshare.jerrywebspider.service.ErrorLogService;
-import com.hytcshare.jerrywebspider.service.LesheImagesService;
 import com.hytcshare.jerrywebspider.service.SpiderTaskService;
+import com.hytcshare.jerrywebspider.service.TuwanAlbumImagesService;
 import com.hytcshare.jerrywebspider.utils.DownloadUtils;
 import com.hytcshare.jerrywebspider.utils.ExceptionUtils;
 import com.hytcshare.jerrywebspider.utils.TaskUtils;
@@ -14,16 +14,17 @@ import java.util.Date;
 import java.util.List;
 
 @Slf4j
-public class LesheImageDownloadTask implements Runnable {
-    private LesheImagesService lesheImagesService;
+public class TuwanAlbumImageDownloadTask implements Runnable {
+
+    private TuwanAlbumImagesService tuwanAlbumImagesService;
     private ErrorLogService errorLogService;
     private SpiderTaskService spiderTaskService;
 
-    private String lesheImageStorePath;
-    private String lesheDownloadTaskName;
+    private String tuwanAlbumImageStorePath;
+    private String tuwanAlbumDownloadTaskName;
 
-    public void setLesheImagesService(LesheImagesService lesheImagesService) {
-        this.lesheImagesService = lesheImagesService;
+    public void setTuwanAlbumImagesService(TuwanAlbumImagesService tuwanAlbumImagesService) {
+        this.tuwanAlbumImagesService = tuwanAlbumImagesService;
     }
 
     public void setErrorLogService(ErrorLogService errorLogService) {
@@ -34,28 +35,28 @@ public class LesheImageDownloadTask implements Runnable {
         this.spiderTaskService = spiderTaskService;
     }
 
-    public void setLesheImageStorePath(String lesheImageStorePath) {
-        this.lesheImageStorePath = lesheImageStorePath;
+    public void setTuwanAlbumImageStorePath(String tuwanAlbumImageStorePath) {
+        this.tuwanAlbumImageStorePath = tuwanAlbumImageStorePath;
     }
 
-    public void setLesheDownloadTaskName(String lesheDownloadTaskName) {
-        this.lesheDownloadTaskName = lesheDownloadTaskName;
+    public void setTuwanAlbumDownloadTaskName(String tuwanAlbumDownloadTaskName) {
+        this.tuwanAlbumDownloadTaskName = tuwanAlbumDownloadTaskName;
     }
 
     @Override
     public void run() {
-        log.info("start download leshe image zip package!");
-        TaskUtils.startTask(spiderTaskService, lesheDownloadTaskName);
+        log.info("start download tuwan album images!");
+        TaskUtils.startTask(spiderTaskService, tuwanAlbumDownloadTaskName);
         //获取待下载列表
-        List<LesheImages> notDownloadedList = lesheImagesService.getNotDownloadedList();
+        List<TuwanAlbumImages> notDownloadedList = tuwanAlbumImagesService.getNotDownloadedList();
         //遍历下载
-        for (LesheImages image : notDownloadedList) {
+        for (TuwanAlbumImages image : notDownloadedList) {
             try {
-                //下载图包
-                DownloadUtils.downloadFile(lesheImageStorePath, "", image.getTitle(), image.getUrl());
+                //下载图片
+                DownloadUtils.downloadFile(tuwanAlbumImageStorePath, "", image.getUrl());
                 //更新已下载记录
                 image.setDownloaded(DownloadedStatusEnum.DOWNLOADED.getCode());
-                lesheImagesService.insertOrUpdate(image);
+                tuwanAlbumImagesService.insertOrUpdate(image);
             } catch (Exception e) {
                 //记录错误日志
                 ErrorLog errorLog = new ErrorLog();
@@ -66,9 +67,8 @@ public class LesheImageDownloadTask implements Runnable {
                 errorLogService.insertOrUpdate(errorLog);
             }
         }
-        log.info("download leshe image zip package finish!");
+        log.info("download leshe album images finish!");
         //更新任务状态为执行完毕
-        TaskUtils.shutdownTask(spiderTaskService, lesheDownloadTaskName);
-
+        TaskUtils.shutdownTask(spiderTaskService, tuwanAlbumDownloadTaskName);
     }
 }

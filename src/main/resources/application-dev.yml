@@ -24,6 +24,11 @@ tuwan:
   imageStorePath: D:\data\tuWan
   spiderTaskName: tuwanSpiderTask
   downloadTaskName: tuwanDownloadTask
+  album:
+    welfareUrl: https://api.tuwan.com/apps/Welfare/detail
+    spiderTaskName: tuwanAlbumSpiderTask
+    downloadTaskName: tuwanAlbumDownloadTask
+    imageStorePath: D:\data\tuWan\album
 #Leshe地址
 leshe:
   #leshe爬虫入口
@@ -34,6 +39,13 @@ leshe:
   #imageStorePath: D:\data\leshe
   spiderTaskName: lesheSpiderTask
   downloadTaskName: lesheDownloadTask
+  album:
+    #leshealbum爬虫入口
+    welfareUrl: https://www.leshe.us/page/1
+    #imageStorePath: /home/jerrySpider/leshe/album
+    imageStorePath: D:\data\leshe\album
+    spiderTaskName: lesheAlbumSpiderTask
+    downloadTaskName: lesheAlbumDownloadTask
 #服务端口
 server:
   port: 8088

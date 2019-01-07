@@ -1,8 +1,6 @@
 package com.hytcshare.jerrywebspider.task;
 
-import com.hytcshare.jerrywebspider.entity.SpiderTask;
 import com.hytcshare.jerrywebspider.enums.ExceptionEnum;
-import com.hytcshare.jerrywebspider.enums.SpiderTaskStatusEnum;
 import com.hytcshare.jerrywebspider.exception.SpiderException;
 import com.hytcshare.jerrywebspider.pageprocessor.LeshePageProcessor;
 import com.hytcshare.jerrywebspider.pipeline.LesheMysqlPipeline;
@@ -13,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import us.codecraft.webmagic.model.OOSpider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -47,7 +44,7 @@ public class LesheSpiderTask implements Runnable {
 
     @Override
     public void run() {
-        log.info("tuwan spider start！");
+        log.info("leshe spider start！");
         TaskUtils.startTask(spiderTaskService, spiderTaskName);
         if (StringUtils.isEmpty(collectionName)) {
             throw new SpiderException(ExceptionEnum.COLLECTION_NAME_ILLEGAL.getCode(), ExceptionEnum.COLLECTION_NAME_ILLEGAL.getDes());
@@ -62,7 +59,7 @@ public class LesheSpiderTask implements Runnable {
                 continue;
             }
             OOSpider.create(new LeshePageProcessor())
-                    .addUrl("http://111.231.221.217:34567/A:/" + encode + "?sortby=lastModtime&order=desc&page=1")
+                    .addUrl(welfareUrl + encode + "?sortby=lastModtime&order=desc&page=1")
                     .addPipeline(new ConsolePipeline())
                     .addPipeline(new LesheMysqlPipeline(lesheImagesService))
                     .thread(5).run();

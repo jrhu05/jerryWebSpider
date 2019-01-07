@@ -2,11 +2,9 @@ package com.hytcshare.jerrywebspider.task;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hytcshare.jerrywebspider.entity.SpiderTask;
 import com.hytcshare.jerrywebspider.entity.TuwanImages;
 import com.hytcshare.jerrywebspider.entity.TuwanMp3;
 import com.hytcshare.jerrywebspider.enums.ExceptionEnum;
-import com.hytcshare.jerrywebspider.enums.SpiderTaskStatusEnum;
 import com.hytcshare.jerrywebspider.exception.SpiderException;
 import com.hytcshare.jerrywebspider.service.SpiderTaskService;
 import com.hytcshare.jerrywebspider.service.TuwanImagesService;
@@ -14,8 +12,6 @@ import com.hytcshare.jerrywebspider.service.TuwanMp3Service;
 import com.hytcshare.jerrywebspider.utils.HttpUtils;
 import com.hytcshare.jerrywebspider.utils.TaskUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
-
 import java.util.*;
 
 @Slf4j

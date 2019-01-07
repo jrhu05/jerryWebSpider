@@ -1,10 +1,8 @@
 package com.hytcshare.jerrywebspider.task;
 
 import com.hytcshare.jerrywebspider.entity.ErrorLog;
-import com.hytcshare.jerrywebspider.entity.SpiderTask;
 import com.hytcshare.jerrywebspider.entity.TuwanImages;
 import com.hytcshare.jerrywebspider.enums.DownloadedStatusEnum;
-import com.hytcshare.jerrywebspider.enums.SpiderTaskStatusEnum;
 import com.hytcshare.jerrywebspider.service.ErrorLogService;
 import com.hytcshare.jerrywebspider.service.SpiderTaskService;
 import com.hytcshare.jerrywebspider.service.TuwanImagesService;
@@ -13,7 +11,6 @@ import com.hytcshare.jerrywebspider.utils.ExceptionUtils;
 import com.hytcshare.jerrywebspider.utils.TaskUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

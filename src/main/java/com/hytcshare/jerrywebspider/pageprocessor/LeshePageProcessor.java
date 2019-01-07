@@ -5,7 +5,6 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.model.OOSpider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -34,7 +33,6 @@ public class LeshePageProcessor implements PageProcessor {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        //System.out.println(encode);
         //%E9%A3%8E%E4%B9%8B%E9%A2%86%E5%9F%9F
         if (!encode.equalsIgnoreCase("")) {
             OOSpider.create(new LeshePageProcessor())
