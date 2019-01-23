@@ -8,13 +8,13 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 
 ### 一、tuwanSpider
 
-tuwan接口更新，此爬虫目前已失效。
+tuwan接口更新，此爬虫目前已失效，目前已无法直接下载压缩包，但可以逐张下载收费的图片，具体参见tuwanAlbumSpider。
 
 ~~提供对tuwan网妹子图、音乐的抓取及下载功能，程序主要逻辑集中在task包下的TuwanSpiderTask类与TuwanImageDownloadTask类，入口为TuwanSpiderController。~~
 
 ### 二、tuwanAlbumSpider
 
-接口更新不让爬压缩包，那爬每个相册公开的那几张图总可以吧。该爬虫提供对tuwan网相册公开图的抓取及下载功能，程序主要逻辑集中在task包下的TuwanAlbumSpiderTask与TuwanAlbumImageDownloadTask类，入口为TuwanAlbumSpiderController。
+该爬虫提供对tuwan网网妹子图的抓取及下载功能，程序主要逻辑集中在task包下的TuwanAlbumSpiderTask与TuwanAlbumImageDownloadTask类，入口为TuwanAlbumSpiderController。
 
 ![](https://raw.githubusercontent.com/jrhu05/jerryWebSpider/master/pic/tuwan.jpg)
 
@@ -42,7 +42,7 @@ leshe程序更新，需要密码，此爬虫目前已失效。
 
 1、使用navicat等工具新建mysql数据库，名称自定；
 
-2、将db目录下的my_spider.sql导入数据库（该sql已经包括截止2019-01-07爬取到的最新数据）；
+2、将db目录下的my_spider.sql导入数据库（该sql已经包括截止2019-01-23爬取到的最新数据，内含34669张tuwan网妹子图）；
 
 3、将项目导入idea或其他集成开发工具；
 
@@ -50,9 +50,11 @@ leshe程序更新，需要密码，此爬虫目前已失效。
 
 5、启动项目；
 
-6、图包地址爬取：访问http://你的IP:8088/tuwanAlbumSpider/startSpider?start=0&endLine=1500 即可对tuwan网id从0到1500的相册进行爬取；
+6、图包地址爬取：访问http://你的IP:8088/tuwanAlbumSpider/startSpider?start=0&end=1500 即可对tuwan网id从0到1500的相册进行爬取；
 
-7、图包批量下载：访问http://你的IP:8088/tuwanAlbumSpider/startDownLoadImage 即可对前一步爬取到的图包进行下载；
+7、图包批量下载：访问http://你的IP:8088/tuwanAlbumSpider/startDownLoadImage?start=1391&end=1390 即可对前一步爬取到的图包进行下载，下载从1391号图包开始，到1390号图包结束；
+
+ps：系统默认会跳过已经下载过的图片，如果想重新下载需要将数据库中tuwan_album_images表对应记录的downloaded字段置为0
 
 8、项目打包及服务器部署运行请自行搜索
 

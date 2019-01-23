@@ -18,6 +18,10 @@ public class TuwanAlbumImages {
     @GeneratedValue
     private int id;
     /**
+     * 图包序号
+     */
+    private int albumIndex;
+    /**
      * 图包名称
      */
     private String title;

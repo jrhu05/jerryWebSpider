@@ -19,6 +19,8 @@ public class TuwanAlbumImageDownloadTask implements Runnable {
     private TuwanAlbumImagesService tuwanAlbumImagesService;
     private ErrorLogService errorLogService;
     private SpiderTaskService spiderTaskService;
+    private int downloadStartId;
+    private int downloadEndId;
 
     private String tuwanAlbumImageStorePath;
     private String tuwanAlbumDownloadTaskName;
@@ -43,28 +45,38 @@ public class TuwanAlbumImageDownloadTask implements Runnable {
         this.tuwanAlbumDownloadTaskName = tuwanAlbumDownloadTaskName;
     }
 
+    public void setDownloadStartId(int downloadStartId) {
+        this.downloadStartId = downloadStartId;
+    }
+
+    public void setDownloadEndId(int downloadEndId) {
+        this.downloadEndId = downloadEndId;
+    }
+
     @Override
     public void run() {
         log.info("start download tuwan album images!");
         TaskUtils.startTask(spiderTaskService, tuwanAlbumDownloadTaskName);
-        //获取待下载列表
-        List<TuwanAlbumImages> notDownloadedList = tuwanAlbumImagesService.getNotDownloadedList();
-        //遍历下载
-        for (TuwanAlbumImages image : notDownloadedList) {
-            try {
-                //下载图片
-                DownloadUtils.downloadFile(tuwanAlbumImageStorePath, "", image.getUrl());
-                //更新已下载记录
-                image.setDownloaded(DownloadedStatusEnum.DOWNLOADED.getCode());
-                tuwanAlbumImagesService.insertOrUpdate(image);
-            } catch (Exception e) {
-                //记录错误日志
-                ErrorLog errorLog = new ErrorLog();
-                errorLog.setCreator(this.getClass().getName());
-                errorLog.setErrorMessage("图片文件下载失败！index: " + image.getId());
-                errorLog.setLogTime(new Date());
-                errorLog.setStackDump(ExceptionUtils.getStackTrace(e));
-                errorLogService.insertOrUpdate(errorLog);
+        for (int index = downloadStartId ; index <= downloadEndId ; index++){
+            //获取待下载列表
+            List<TuwanAlbumImages> notDownloadedList = tuwanAlbumImagesService.getNotDownloadedListByIndex(index);
+            //遍历下载
+            for (TuwanAlbumImages image : notDownloadedList) {
+                try {
+                    //下载图片
+                    DownloadUtils.downloadFile(tuwanAlbumImageStorePath, image.getAlbumIndex()+"-"+image.getTitle(), image.getUrl());
+                    //更新已下载记录
+                    image.setDownloaded(DownloadedStatusEnum.DOWNLOADED.getCode());
+                    tuwanAlbumImagesService.insertOrUpdate(image);
+                } catch (Exception e) {
+                    //记录错误日志
+                    ErrorLog errorLog = new ErrorLog();
+                    errorLog.setCreator(this.getClass().getName());
+                    errorLog.setErrorMessage("图片文件下载失败！index: " + image.getId());
+                    errorLog.setLogTime(new Date());
+                    errorLog.setStackDump(ExceptionUtils.getStackTrace(e));
+                    errorLogService.insertOrUpdate(errorLog);
+                }
             }
         }
         log.info("download leshe album images finish!");

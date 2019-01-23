@@ -38,19 +38,10 @@ public class TuwanAlbumSpiderController extends BaseController {
     private ErrorLogService errorLogService;
 
     @RequestMapping("/startSpider")
-    public DeferredResult startSpider(Integer start, Integer endLine) {
+    public DeferredResult startSpider(Integer start, Integer end) {
         DeferredResult deferredResult = new DeferredResult();
 
-        if (endLine == null || endLine < 0) {
-            sealFail(deferredResult, "endLine非法！");
-            return deferredResult;
-        }
-        if (start == null || start < 0) {
-            sealFail(deferredResult, "start非法！");
-            return deferredResult;
-        }
-        if (start > endLine) {
-            sealFail(deferredResult, "start非法！");
+        if (startEndCheck(start, end, deferredResult)) {
             return deferredResult;
         }
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
@@ -60,7 +51,7 @@ public class TuwanAlbumSpiderController extends BaseController {
                 new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
         TuwanAlbumSpiderTask task = new TuwanAlbumSpiderTask();
         task.setTuwanStart(start);
-        task.setEndLine(endLine);
+        task.setEndLine(end);
         task.setWelfareUrl(welfareUrl);
         task.setSpiderTaskService(spiderTaskService);
         task.setTuwanAlbumSpiderTaskName(spiderTaskName);
@@ -71,9 +62,28 @@ public class TuwanAlbumSpiderController extends BaseController {
         return deferredResult;
     }
 
+    private boolean startEndCheck(Integer start, Integer endLine, DeferredResult deferredResult) {
+        if (endLine == null || endLine < 0) {
+            sealFail(deferredResult, "end非法！");
+            return true;
+        }
+        if (start == null || start < 0) {
+            sealFail(deferredResult, "start非法！");
+            return true;
+        }
+        if (start > endLine) {
+            sealFail(deferredResult, "start非法！");
+            return true;
+        }
+        return false;
+    }
+
     @RequestMapping("/startDownLoadImage")
-    public DeferredResult startDownLoadImageZipPackage() {
+    public DeferredResult startDownLoadImageZipPackage(Integer start, Integer end) {
         DeferredResult deferredResult = new DeferredResult();
+        if (startEndCheck(start, end, deferredResult)) {
+            return deferredResult;
+        }
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
                 .setNameFormat("tuwanAlbumDownloader-pool-%d").build();
         ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,
@@ -85,6 +95,8 @@ public class TuwanAlbumSpiderController extends BaseController {
         task.setTuwanAlbumDownloadTaskName(downloadTaskName);
         task.setTuwanAlbumImagesService(tuwanAlbumImagesService);
         task.setTuwanAlbumImageStorePath(imageStorePath);
+        task.setDownloadStartId(start);
+        task.setDownloadEndId(end);
         singleThreadPool.execute(task);
         singleThreadPool.shutdown();
         sealSuccess(deferredResult, "success! download on going!");

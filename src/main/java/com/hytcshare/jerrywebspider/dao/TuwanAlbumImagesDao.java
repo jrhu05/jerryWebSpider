@@ -8,4 +8,8 @@ public interface TuwanAlbumImagesDao extends JpaRepository<TuwanAlbumImages, Int
     public TuwanAlbumImages findByUrl(String url);
 
     public List<TuwanAlbumImages> findAllByDownloaded(int downloaded);
+
+    public List<TuwanAlbumImages> findAllByDownloadedAndAlbumIndex(int downloaded,int albumIndex);
+
+    public List<TuwanAlbumImages> findAllByTitle(String title);
 }
