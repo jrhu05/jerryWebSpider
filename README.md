@@ -12,7 +12,7 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 
 2019.1.7 原有tuwanSpider、lesheSpider由于接口升级等原因失效，作废。追加tuwanAlbumSpider和lesheAlbumSpider，对公开图片进行爬取
 
-2019.1.23 对追加tuwanAlbumSpider进行版本更新，利用新的接口漏洞对全站图片进行爬取
+2019.1.23 对tuwanAlbumSpider进行版本更新，利用新的接口漏洞对全站图片进行爬取
 
 ## 项目模块 
 
@@ -95,3 +95,5 @@ ps：系统默认会跳过已经下载过的图片，如果想重新下载需要
 资源打包下载见
 
 http://blog.hytcshare.com/post/tuwan-spider.html
+
+追加的1286-1391尚未更新到资源打包下载地址中，预计于1.26/1.27左右更新
