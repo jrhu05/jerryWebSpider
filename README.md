@@ -100,4 +100,4 @@ ps：系统默认会跳过已经下载过的图片，如果想重新下载需要
 
 http://blog.hytcshare.com/post/tuwan-spider.html
 
-追加的1292-1442尚未更新到资源打包下载地址中，预计于3.2/3.3左右更新
+
