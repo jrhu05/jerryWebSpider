@@ -104,7 +104,7 @@ ps：系统默认会跳过已经下载过的图片，如果想重新下载需要
 
 **tuwan_crawle**
 
-作者：ignnonster](https://github.com/bignnonster)
+作者：[ignnonster](https://github.com/bignnonster)
 
 项目地址：https://github.com/bignnonster/tuwan_crawler
 
