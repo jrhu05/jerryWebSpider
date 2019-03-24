@@ -4,6 +4,8 @@
 
 jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前内含对tuwan网妹子图的爬虫。
 
+出现了Python版本哦，请参阅“姊妹项目”！~~
+
 ## 更新历史
 
 2018.12.8 初始提交
@@ -19,6 +21,8 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 2019.2.22 追加的tuwan序号为1292-1442的压缩包已更新到百度云
 
 2019.2.27 百度云资源被封禁，新的下载方式请见博客链接
+
+2019.3.24 追加基于[jerryWebSpider](https://github.com/jrhu05/jerryWebSpider)的url获取逻辑而转化的python27版本
 
 ## 项目模块 
 
@@ -93,6 +97,18 @@ ps：系统默认会跳过已经下载过的图片，如果想重新下载需要
 7、图包批量下载：访问http://你的IP:8088/lesheAlbumSpider/startDownLoadImage 即可对前一步爬取到的图片进行下载；
 
 8、项目打包及服务器部署运行请自行搜索
+
+## 姊妹项目
+
+1、对tuwanAlbumSpider基于Python的实现
+
+**tuwan_crawle**
+
+作者：ignnonster](https://github.com/bignnonster)
+
+项目地址：https://github.com/bignnonster/tuwan_crawler
+
+说明：基于[jerryWebSpider](https://github.com/jrhu05/jerryWebSpider)的url获取逻辑而转化的python27版本。适用于没有java、mysql环境的同学。
 
 ## 其他
 
