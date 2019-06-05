@@ -24,6 +24,8 @@ jerryWebSpider是一个java爬虫实例集合，基于springboot构建，目前�
 
 2019.3.24 追加基于[jerryWebSpider](https://github.com/jrhu05/jerryWebSpider)的url获取逻辑而转化的python27版本
 
+2019.6.5 追加1-1400分块打包资源下载地址，下载方式为百度云，新的下载地址请见博客链接
+
 ## 项目模块 
 
 ### 一、tuwanSpider
